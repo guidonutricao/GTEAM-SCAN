@@ -59,5 +59,71 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    /* Mobile optimizations */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Prevent text size adjustment on orientation change */
+    -webkit-text-size-adjust: 100%;
+    /* Improve touch scrolling */
+    -webkit-overflow-scrolling: touch;
   }
+
+  /* Improve tap targets for mobile */
+  button, a, input, select, textarea {
+    touch-action: manipulation;
+  }
+
+  /* Prevent double-tap zoom on buttons */
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Optimize images for mobile */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Print and Download Styles */
+@media print {
+  body {
+    background: white !important;
+  }
+  
+  .print\:hidden {
+    display: none !important;
+  }
+}
+
+/* Custom animations for report */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out;
 }

@@ -31,6 +31,7 @@ const Index = () => {
   const [loading, setLoading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [foodDescription, setFoodDescription] = useState<string>("");
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -63,6 +64,9 @@ const Index = () => {
     try {
       const formData = new FormData();
       formData.append("image", selectedFile);
+      if (foodDescription.trim()) {
+        formData.append("description", foodDescription.trim());
+      }
 
       const response = await fetch("https://n8n.guidonutri.com/webhook/GTEAMSCAN", {
         method: "POST",
@@ -104,58 +108,58 @@ const Index = () => {
       {/* Loading Screen */}
       {loading && <AnalysisLoading />}
 
-      <div className="min-h-screen bg-gradient-to-b from-background to-secondary flex flex-col items-center justify-center p-6">
-        <div className="w-full max-w-2xl space-y-8">
+      <div className="min-h-screen bg-gradient-to-b from-background to-secondary flex flex-col items-center justify-center p-4 sm:p-6">
+        <div className="w-full max-w-2xl space-y-4 sm:space-y-6">
         {/* Header */}
-        <header className="text-center space-y-4 animate-slide-up">
+        <header className="text-center space-y-3 sm:space-y-4 animate-slide-up">
           <div className="flex justify-center">
             <img
               src={gteamLogo}
               alt="GTEAM Logo"
-              className="h-32 w-auto object-contain animate-float"
+              className="h-20 sm:h-28 w-auto object-contain animate-float"
             />
           </div>
           <div>
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-primary via-primary-glow to-primary bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-primary-glow to-primary bg-clip-text text-transparent">
               GTEAM Scan
             </h1>
-            <p className="text-muted-foreground mt-2 text-lg">
+            <p className="text-muted-foreground mt-1.5 sm:mt-2 text-base sm:text-lg">
               Análise nutricional inteligente
             </p>
           </div>
         </header>
 
         {/* Info Banner */}
-        <div className="grid md:grid-cols-2 gap-4 animate-slide-up">
+        <div className="grid gap-3 sm:gap-4 md:grid-cols-2 animate-slide-up">
           {/* Tips Card */}
           <Card className="border-border shadow-elevated backdrop-blur-sm bg-card/95 border-l-4 border-l-blue-500">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-blue-500" />
+            <CardHeader className="pb-2 sm:pb-3 px-4 pt-4">
+              <CardTitle className="text-sm sm:text-base flex items-center gap-2">
+                <Lightbulb className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500 flex-shrink-0" />
                 Dicas para a Foto
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <ul className="text-sm text-muted-foreground space-y-2">
+            <CardContent className="px-4 pb-4">
+              <ul className="text-xs sm:text-sm text-muted-foreground space-y-1.5 sm:space-y-2">
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
-                  <span>Use boa iluminação natural ou artificial</span>
+                  <span className="text-blue-500 mt-0.5 flex-shrink-0">•</span>
+                  <span>Use boa iluminação</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
-                  <span>Mantenha o foco nítido no prato</span>
+                  <span className="text-blue-500 mt-0.5 flex-shrink-0">•</span>
+                  <span>Foco nítido no prato</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
-                  <span>Centralize o prato na imagem</span>
+                  <span className="text-blue-500 mt-0.5 flex-shrink-0">•</span>
+                  <span>Centralize a imagem</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
-                  <span>Tire de uma distância média</span>
+                  <span className="text-blue-500 mt-0.5 flex-shrink-0">•</span>
+                  <span>Distância média</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-blue-500 mt-0.5">•</span>
-                  <span>Evite sombras ou cortes na imagem</span>
+                  <span className="text-blue-500 mt-0.5 flex-shrink-0">•</span>
+                  <span>Evite sombras</span>
                 </li>
               </ul>
             </CardContent>
@@ -163,17 +167,17 @@ const Index = () => {
 
           {/* Warning Card */}
           <Card className="border-border shadow-elevated backdrop-blur-sm bg-card/95 border-l-4 border-l-yellow-500">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-yellow-500" />
+            <CardHeader className="pb-2 sm:pb-3 px-4 pt-4">
+              <CardTitle className="text-sm sm:text-base flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-500 flex-shrink-0" />
                 Aviso sobre a IA
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+            <CardContent className="px-4 pb-4">
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                 Os resultados são <span className="font-semibold text-foreground">estimativas baseadas em IA</span> e podem conter erros. 
-                Use as informações apenas como <span className="font-semibold text-foreground">referência</span>, não como verdade absoluta. 
-                Para orientações nutricionais precisas, consulte um profissional de saúde.
+                Use apenas como <span className="font-semibold text-foreground">referência</span>. 
+                Para orientações precisas, consulte um profissional.
               </p>
             </CardContent>
           </Card>
@@ -181,13 +185,13 @@ const Index = () => {
 
         {/* Upload Card */}
         <Card className="border-border shadow-elevated backdrop-blur-sm bg-card/95">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Escaneie sua refeição</CardTitle>
-            <CardDescription>
+          <CardHeader className="text-center px-4 pt-5 pb-3 sm:px-6 sm:pt-6 sm:pb-4">
+            <CardTitle className="text-xl sm:text-2xl">Escaneie sua refeição</CardTitle>
+            <CardDescription className="text-sm sm:text-base">
               Envie uma foto do seu prato para análise completa
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-4 sm:space-y-5 px-4 pb-5 sm:px-6 sm:pb-6">
             <div className="grid gap-3">
               <input
                 type="file"
@@ -199,19 +203,19 @@ const Index = () => {
               />
               <label htmlFor="upload-input">
                 <Button
-                  className="w-full h-14 text-base font-semibold bg-gradient-to-r from-primary to-primary-glow hover:shadow-glow transition-all cursor-pointer"
+                  className="w-full h-12 sm:h-14 text-sm sm:text-base font-semibold bg-gradient-to-r from-primary to-primary-glow hover:shadow-glow transition-all cursor-pointer touch-manipulation active:scale-95"
                   asChild
                   disabled={loading}
                 >
                   <span>
                     {loading ? (
                       <>
-                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
                         Analisando...
                       </>
                     ) : (
                       <>
-                        <Upload className="mr-2 h-5 w-5" />
+                        <Upload className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                         Escolher da Galeria
                       </>
                     )}
@@ -222,12 +226,12 @@ const Index = () => {
               <label htmlFor="upload-input">
                 <Button
                   variant="secondary"
-                  className="w-full h-14 text-base font-semibold cursor-pointer"
+                  className="w-full h-12 sm:h-14 text-sm sm:text-base font-semibold cursor-pointer touch-manipulation active:scale-95"
                   asChild
                   disabled={loading}
                 >
                   <span>
-                    <Camera className="mr-2 h-5 w-5" />
+                    <Camera className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                     Tirar Foto
                   </span>
                 </Button>
@@ -236,25 +240,45 @@ const Index = () => {
 
             {/* Image Preview */}
             {imagePreview && (
-              <div className="animate-fade-in space-y-4">
+              <div className="animate-fade-in space-y-3 sm:space-y-4">
                 <img
                   src={imagePreview}
                   alt="Preview"
-                  className="w-full h-64 object-cover rounded-lg border border-border"
+                  className="w-full h-48 sm:h-64 object-cover rounded-lg border border-border"
                 />
+                
+                {/* Food Description Input */}
+                <div className="space-y-2">
+                  <label htmlFor="food-description" className="text-sm font-medium text-foreground">
+                    Descreva o prato (opcional)
+                  </label>
+                  <textarea
+                    id="food-description"
+                    value={foodDescription}
+                    onChange={(e) => setFoodDescription(e.target.value)}
+                    placeholder="Ex: macarrão com frango e legumes..."
+                    disabled={loading}
+                    className="w-full min-h-[80px] px-3 py-2 text-sm sm:text-base rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+                    maxLength={200}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Ajude a IA a identificar melhor o prato descrevendo-o brevemente
+                  </p>
+                </div>
+
                 <Button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className="w-full h-14 text-base font-semibold bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 hover:shadow-glow transition-all"
+                  className="w-full h-12 sm:h-14 text-sm sm:text-base font-semibold bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 hover:shadow-glow transition-all touch-manipulation active:scale-95"
                 >
                   {loading ? (
                     <>
-                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
                       Analisando...
                     </>
                   ) : (
                     <>
-                      <Send className="mr-2 h-5 w-5" />
+                      <Send className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                       Enviar para Análise
                     </>
                   )}
@@ -266,7 +290,7 @@ const Index = () => {
 
         {/* Footer */}
         <footer className="text-center">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-[10px] sm:text-xs text-muted-foreground">
             Tecnologia de análise alimentar por IA • GTEAM Labs
           </p>
         </footer>

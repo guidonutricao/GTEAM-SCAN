@@ -7,12 +7,19 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: "1rem",
+        sm: "1.5rem",
+        lg: "2rem",
+      },
       screens: {
         "2xl": "1400px",
       },
     },
     extend: {
+      screens: {
+        'xs': '475px',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -83,7 +90,7 @@ export default {
         "slide-up": {
           "0%": {
             opacity: "0",
-            transform: "translateY(20px)",
+            transform: "translateY(15px)",
           },
           "100%": {
             opacity: "1",
@@ -95,7 +102,7 @@ export default {
             transform: "translateY(0)",
           },
           "50%": {
-            transform: "translateY(-10px)",
+            transform: "translateY(-8px)",
           },
         },
         "fade-in": {
@@ -110,9 +117,9 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "slide-up": "slide-up 0.6s ease-out",
-        float: "float 3s ease-in-out infinite",
-        "fade-in": "fade-in 0.5s ease-out",
+        "slide-up": "slide-up 0.5s ease-out",
+        float: "float 2.5s ease-in-out infinite",
+        "fade-in": "fade-in 0.4s ease-out",
       },
       boxShadow: {
         elevated: "var(--shadow-elevated)",
