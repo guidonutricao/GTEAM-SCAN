@@ -86,12 +86,26 @@ const Report = () => {
             const canvas = await html2canvas(downloadRef.current, {
                 scale: 2,
                 useCORS: true,
-                backgroundColor: '#0f1419',
+                backgroundColor: '#1a2332',
                 logging: false,
+                allowTaint: true,
+                imageTimeout: 0,
             });
 
-            // Convert to JPG
-            canvas.toBlob((blob) => {
+            // Create a new canvas with enhanced brightness and contrast
+            const enhancedCanvas = document.createElement('canvas');
+            enhancedCanvas.width = canvas.width;
+            enhancedCanvas.height = canvas.height;
+            const ctx = enhancedCanvas.getContext('2d');
+            
+            if (ctx) {
+                // Apply brightness and contrast adjustments
+                ctx.filter = 'brightness(1.15) contrast(1.08)';
+                ctx.drawImage(canvas, 0, 0);
+            }
+
+            // Convert to JPG with high quality
+            enhancedCanvas.toBlob((blob) => {
                 if (blob) {
                     const url = URL.createObjectURL(blob);
                     const link = document.createElement('a');

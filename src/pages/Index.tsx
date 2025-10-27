@@ -63,14 +63,15 @@ const Index = () => {
 
     try {
       const formData = new FormData();
-      formData.append("image", selectedFile);
-      if (foodDescription.trim()) {
-        formData.append("description", foodDescription.trim());
-      }
+      // Adiciona a imagem com o nome 'data' (campo binário do webhook)
+      formData.append("data", selectedFile);
+      // Adiciona a descrição como campo de texto
+      formData.append("descricao", foodDescription.trim() || "");
 
-      const response = await fetch("https://n8n.guidonutri.com/webhook/GTEAMSCAN", {
+      const response = await fetch("https://n8n.guidonutri.com/webhook-test/GTEAMSCAN", {
         method: "POST",
         body: formData,
+        // Não define Content-Type, o browser faz isso automaticamente para FormData
       });
 
       if (!response.ok) {
